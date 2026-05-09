@@ -1,0 +1,71 @@
+# hexa.toml — hexa-grid standalone package manifest
+#
+# Spec: shared/hexa-lang/hexa-toml-spec.json (version 1.0.0)
+# Distribution target: hx install hexa-grid
+# Provenance: extracted from canon/domains/{compute,infra}/ on 2026-05-09
+#             (n6-arch SHA 47c70cbf — sister of hexa-energy / hexa-chip / hexa-codex).
+# Position:   AI 산업 인프라 fabric — energy(전력)·chip(연산)·codex(model) 사이의
+#             결속자. datacenter / power-grid / interconnect는 sibling CLI 직접 호출.
+
+[package]
+name = "hexa-grid"
+version = "1.0.0"
+entry = "cli/hexa-grid.hexa"
+description = "AI 산업 인프라 fabric (HEXA family) — 9-verb network/compute-platform substrate (network·5G/6G·gpgpu·ai-native·lora-mesh·mfg-quality·construction). Datacenter/grid/interconnect는 별도 standalone — hexa-energy / hexa-chip CLI 직접 호출."
+license = "MIT"
+authors = ["박민우 <nerve011235@gmail.com>"]
+repository = "https://github.com/dancinlab/hexa-grid"
+homepage = "https://github.com/dancinlab/hexa-grid"
+readme = "README.md"
+keywords = ["ai-infrastructure", "datacenter-fabric", "network", "5g-6g", "gpgpu", "ai-native", "lora-mesh", "hexa-family"]
+categories = ["ai-infrastructure", "networking", "spec-substrate"]
+
+[[bin]]
+name = "hexa-grid"
+path = "cli/hexa-grid.hexa"
+
+[test]
+runner = "hexa"
+files = [
+    "tests/test_selftest.hexa",
+]
+
+[scripts]
+install = "install.hexa"
+
+# ── Verb manifest (9-verb AI infra substrate) ─────────────
+verb_parent = "."
+[verbs]
+network    = ["network", "netproto", "hexa_netproto"]
+wireless   = ["5g6g", "lora_mesh"]
+compute    = ["gpgpu", "ai_native"]
+facility   = ["mfg_quality", "construction"]
+
+# ── Cross-link (sister substrates — invoke their CLIs directly) ──
+# Policy: 데이터센터·전력·인터커넥트·열관리는 hexa-energy / hexa-chip 소속.
+#         hexa-grid에서 그쪽이 필요하면 sibling CLI를 직접 호출. 재구현 금지.
+[crosslink]
+energy_datacenter = "dancinlab/hexa-energy nuclear  → `hexa-energy smr_dc` / `hexa-energy dc_reactor` (datacenter reactor)"
+energy_grid       = "dancinlab/hexa-energy grid     → `hexa-energy grid` (power-grid 전력망)"
+energy_thermal    = "dancinlab/hexa-energy thermal  → `hexa-energy hvac` / `hexa-energy thermal` (cooling/HVAC)"
+chip_interconnect = "dancinlab/hexa-chip            → `hexa-chip interconnect` (NVLink/InfiniBand/UCIe class)"
+codex_model       = "dancinlab/hexa-codex           → `hexa-codex deploy` / `hexa-codex agent_serving` (model serving fabric)"
+
+# ── Closure provenance (raw#10 honest C3) ─────────────────
+[closure]
+verbs_total = 9
+groups_total = 4
+verbs_wired = 0
+verbs_spec = 9
+verdict = "SPEC_FIRST"
+extracted_from = "canon/domains/{compute,infra}/ @ 47c70cbf"
+
+# ── Scope honesty (raw#10 C3) ─────────────────────────────
+[scope]
+honest_scope = "9-verb AI 인프라 fabric (4 그룹). Datacenter/power-grid/interconnect/cooling/model-serving는 명시적으로 NOT_SCOPE — sibling CLI(hexa-energy / hexa-chip / hexa-codex) 직접 호출."
+not_scope = ["datacenter facility / SMR-DC (→ hexa-energy CLI)", "power grid (→ hexa-energy grid)", "HVAC / thermal-management (→ hexa-energy thermal)", "chip interconnect (→ hexa-chip interconnect)", "model serving / inference cost (→ hexa-codex)", "in-situ deployment validation"]
+
+# ── Cost profile ──────────────────────────────────────────
+[cost]
+mac_local_default = "$0 (spec read + CLI dispatcher placeholder)"
+selftest = "$0 (verb count check)"

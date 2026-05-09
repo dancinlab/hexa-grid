@@ -1,0 +1,169 @@
+#!hexa strict
+// hexa-grid/cli/hexa-grid.hexa — standalone hexa-grid CLI router
+//
+// 9-verb AI 산업 인프라 fabric (HEXA family) router. Spec-first dispatcher.
+//
+// Cross-link policy (raw#10): datacenter / power-grid / interconnect /
+// cooling / model-serving는 hexa-energy / hexa-chip / hexa-codex 소속이다.
+// 그쪽이 필요하면 sibling CLI를 직접 호출 — 본 CLI에서 proxy 금지.
+//
+// Root resolution: $HEXA_GRID_ROOT env, else inferred from $0.
+//
+// raw#9 hexa-only, raw#15 read-only.
+
+let VERSION = "1.0.0"
+
+let HOME = env("HOME")
+let HEXA_GRID_ROOT_ENV = env("HEXA_GRID_ROOT")
+
+fn hexa_grid_root() -> str {
+    if HEXA_GRID_ROOT_ENV.len() > 0 { return HEXA_GRID_ROOT_ENV }
+    let inferred = exec("dirname \"$(dirname \"$0\")\" 2>/dev/null || true").trim()
+    if inferred.len() > 0 { return inferred }
+    return HOME + "/.hexa-grid"  // @allow-devpath
+}
+
+let HG = hexa_grid_root()
+
+// 9-verb spec doc registry
+let VERBS = [
+    ["network",       "network",       "network.md"],
+    ["netproto",      "netproto",      "network-protocol.md"],
+    ["hexa_netproto", "hexa_netproto", "hexa-netproto.md"],
+    ["5g6g",          "5g6g",          "5g-6g-network.md"],
+    ["lora_mesh",     "lora_mesh",     "lora-mesh-learning-terminal.md"],
+    ["gpgpu",         "gpgpu",         "gpgpu.md"],
+    ["ai_native",     "ai_native",     "ai-native-architecture.md"],
+    ["mfg_quality",   "mfg_quality",   "manufacturing-quality.md"],
+    ["construction",  "construction",  "construction-structural.md"],
+]
+
+fn shq(s: str) -> str {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _file_exists(p: str) -> bool {
+    let r = exec("[ -f " + shq(p) + " ] && echo yes || echo no").trim()
+    return r == "yes"
+}
+
+fn _spec_path(subdir: str, fname: str) -> str {
+    return HG + "/" + subdir + "/" + fname
+}
+
+fn _print_spec_headline(verb: str, spec_path: str) {
+    if _file_exists(spec_path) == false {
+        println("ERROR: spec doc not found: " + spec_path)
+        println("  (set HEXA_GRID_ROOT or run from repo root)")
+        return
+    }
+    println("hexa-grid " + verb + " — spec doc:")
+    println("  " + spec_path)
+    println("")
+    println("--- doc head (first 30 lines) ---")
+    let raw = exec("head -30 " + shq(spec_path) + " 2>&1")
+    println(raw.trim())
+    println("--- end doc head ---")
+    println("")
+    println("__HEXA_GRID_" + verb.to_upper() + "__ PASS")
+}
+
+fn _print_crosslink() {
+    println("")
+    println("--- cross-link (call sibling CLI directly — raw#10) ---")
+    println("  datacenter facility       hexa-energy smr_dc / dc_reactor")
+    println("  power grid                hexa-energy grid")
+    println("  HVAC / thermal-mgmt       hexa-energy hvac / thermal")
+    println("  chip interconnect         hexa-chip interconnect")
+    println("  model serving / infer     hexa-codex deploy / agent_serving")
+}
+
+fn cmd_status(a: [str]) {
+    println("hexa-grid " + VERSION + " status — 9-verb AI 산업 인프라 fabric")
+    println("")
+    println("  group     verbs")
+    println("  --------- ----------------------------------------------")
+    println("  network   network · netproto · hexa_netproto")
+    println("  wireless  5g6g · lora_mesh")
+    println("  compute   gpgpu · ai_native")
+    println("  facility  mfg_quality · construction")
+    println("")
+    println("  verdict: SPEC_FIRST (9/9 verbs spec-only)")
+    _print_crosslink()
+}
+
+fn cmd_verb(verb: str) {
+    for row in VERBS {
+        if row[0] == verb {
+            _print_spec_headline(verb, _spec_path(row[1], row[2]))
+            return
+        }
+    }
+    println("hexa-grid: unknown verb: " + verb)
+    println("(try `hexa-grid status` for the verb list + cross-link map)")
+    exit(2)
+}
+
+fn cmd_selftest(a: [str]) {
+    println("hexa-grid selftest — 9-verb spec doc presence check")
+    println("")
+    let mut count = 0
+    for row in VERBS {
+        let verb = row[0]
+        let path = _spec_path(row[1], row[2])
+        if _file_exists(path) {
+            println("  [PASS] " + verb)
+            count = count + 1
+        } else {
+            println("  [FAIL] " + verb + " (missing: " + path + ")")
+        }
+    }
+    println("")
+    println("verbs_present = " + str(count) + " / 9")
+    if count == 9 {
+        println("__HEXA_GRID_SELFTEST__ PASS")
+    } else {
+        println("__HEXA_GRID_SELFTEST__ FAIL")
+        exit(1)
+    }
+}
+
+fn cmd_version() {
+    println("hexa-grid " + VERSION)
+    println("standalone AI 산업 인프라 fabric (HEXA family — extracted from canon@47c70cbf on 2026-05-09)")
+    println("license: MIT")
+    println("repo:    https://github.com/dancinlab/hexa-grid")
+}
+
+fn cmd_help() {
+    println("hexa-grid " + VERSION + " — standalone AI infra fabric CLI")
+    println("")
+    println("usage: hexa-grid <subcmd> [flags...]")
+    println("")
+    println("verb subcommands (9-verb AI infra substrate):")
+    for row in VERBS {
+        println("  " + row[0])
+    }
+    println("")
+    println("utility:")
+    println("  status          9-verb table + cross-link + caveats")
+    println("  selftest        9-verb spec doc presence check")
+    println("")
+    println("global flags: --version, --help, -h")
+    println("env:          HEXA_GRID_ROOT (override repo root)")
+    _print_crosslink()
+}
+
+fn main(args: [str]) {
+    if args.len() < 2 { cmd_help(); return }
+    let sub = args[1]
+
+    if sub == "--version" || sub == "-v" { cmd_version(); return }
+    if sub == "--help"    || sub == "-h" { cmd_help();    return }
+
+    if sub == "status"   { cmd_status(args);   return }
+    if sub == "selftest" { cmd_selftest(args); return }
+    if sub == "help"     { cmd_help();         return }
+
+    cmd_verb(sub)
+}
