@@ -4,6 +4,7 @@
 > **hexa-chip (compute)**, and **hexa-codex (model)** — the connective fabric
 > binding the AI industrial stack.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20102809.svg)](https://doi.org/10.5281/zenodo.20102809)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-informational.svg)](hexa.toml)
 [![Verbs: 9 spec](https://img.shields.io/badge/verbs-9_spec-blue.svg)](#verbs)
