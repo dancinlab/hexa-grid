@@ -1,3 +1,6 @@
+<!-- @canonical: canon@d1640e62:domains/infra/manufacturing-quality/manufacturing-quality.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 075ef203050583a91f32cdb470c110bb -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: manufacturing-quality

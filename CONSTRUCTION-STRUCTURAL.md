@@ -1,3 +1,6 @@
+<!-- @canonical: canon@d1640e62:domains/infra/construction-structural/construction-structural.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 4d36c58955dfe144de78a99e74b8b323 -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: construction-structural

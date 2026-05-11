@@ -1,3 +1,6 @@
+<!-- @canonical: canon@d1640e62:domains/infra/lora-mesh-learning-terminal/lora-mesh-learning-terminal.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 26cf1ee5e7bfb38e3910c20d13901e92 -->
 <!-- gold-standard: shared/harness/sample.md -->
 <!-- @doc(type=paper) -->
 ---
