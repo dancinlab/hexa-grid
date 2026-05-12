@@ -58,18 +58,32 @@ rather than re-vendoring:
 
 ---
 
-## Quick start
+## Install
 
-```sh
-hx install hexa-grid
-hexa-grid status         # 9-verb table + cross-link map
-hexa-grid gpgpu          # gpgpu.md spec headline
-hexa-grid selftest       # verb-count check
+```bash
+# 1. Install hexa-lang (ships `hexa` + `hx` package manager)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh)"
 
-# for cross-domain concerns, call sibling CLIs:
-hexa-energy smr_dc
-hexa-energy grid
-hexa-chip interconnect
+# 2. Install hexa-grid
+hx install hexa-grid          # global, pulls latest from registry
+```
+
+## Run
+
+```bash
+hexa-grid network            # network spec doc
+hexa-grid netproto           # network-protocol spec doc
+hexa-grid hexa_netproto      # hexa-netproto spec doc
+hexa-grid 5g6g               # 5g-6g-network spec doc
+hexa-grid lora_mesh          # lora-mesh-learning-terminal spec doc
+hexa-grid gpgpu              # gpgpu spec doc
+hexa-grid ai_native          # ai-native-architecture spec doc
+hexa-grid mfg_quality        # manufacturing-quality spec doc
+hexa-grid construction       # construction-structural spec doc
+hexa-grid status             # 9-verb table + cross-link + caveats
+hexa-grid selftest           # 9-verb spec doc presence check
+hexa-grid version            # print version
+hexa-grid help               # full --help (subcommands + env vars + cross-link)
 ```
 
 ## Status
