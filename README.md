@@ -47,17 +47,6 @@ rather than re-vendoring:
 
 ---
 
-## Verbs (9)
-
-| group     | verbs                                               |
-| --------- | --------------------------------------------------- |
-| network   | `network`, `netproto`, `hexa_netproto`              |
-| wireless  | `5g6g`, `lora_mesh`                                 |
-| compute   | `gpgpu`, `ai_native`                                |
-| facility  | `mfg_quality`, `construction`                       |
-
----
-
 ## Install
 
 ```bash
