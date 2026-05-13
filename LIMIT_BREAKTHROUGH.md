@@ -174,6 +174,16 @@ via higher voltage and DC vs AC. Existence proofs: China UHVDC
 - China State Grid *UHVDC ±1100kV* commissioning reports — B3 evidence
 - IEC 60038 — voltage class standards
 - NERC BAL-003-2 — frequency response
+- MLCommons **MLPerf** Training v4.1 / Inference v4.1 (2024) — AI workload performance benchmark of record
+- **Top500** list (Nov 2024) — supercomputing capability ledger (Linpack/HPCG)
+- NVIDIA Blackwell B200 datasheet (2024) — 1000 W TGP, 1.8 TB/s NVLink 5
+- NVIDIA Hopper H200 datasheet (2024) — 700 W TDP, 900 GB/s NVLink 4
+- AMD Instinct MI300X datasheet (2024) — 750 W TBP
+- Intel Gaudi 3 datasheet (2024) — 900 W TDP
+- UCIe Consortium 2.0 spec (2024) — 32 GT/s/lane
+- PCI-SIG PCIe 5.0 spec — 32 GT/s/lane, 128 GB/s @ x16
+- ERCOT 2024 Capacity Demand and Reserves Report — TX grid peak ~85 GW
+- PJM 2024 Load Forecast Report — PJM peak ~165 GW
 
 ---
 

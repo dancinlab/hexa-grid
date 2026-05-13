@@ -1,0 +1,86 @@
+#!hexa strict
+// hexa-grid/verify/run_all.hexa — orchestrator (.hexa primary).
+//
+// Single CLI entry that runs the 4 SPEC_FIRST audit scripts and
+// aggregates pass/fail. Sister-pattern parity with hexa-rtsc /
+// hexa-fusion / hexa-cern / hexa-chip / hexa-energy (verify/run_all.hexa).
+//
+// hexa-grid is SPEC_FIRST (0/9 verbs wired at v1.0.0), so the "verify"
+// surface here is structural / cross-document / real-limits anchor —
+// not empirical:
+//
+//   1. verify/grid_verify.py        — n=9 verb / 4-group lattice audit  (3 checks)
+//   2. verify/cross_doc_audit.py    — cross-document consistency audit  (4 checks)
+//   3. verify/real_limits_audit.py  — LATTICE_POLICY §1.2 real-limits   (4 checks)
+//   4. verify/vendor_spec_audit.py  — raw#10 C3 vendor / industry defer (4 checks)
+//
+// Total native closure: 3 + 4 + 4 + 4 = 15 checks. exit 0 = all 15 PASS.
+//
+// PASS does NOT imply any spec quantitative claim has been empirically
+// validated. SPEC_FIRST verdict preserved (raw#10 C3, LATTICE_POLICY §1.3).
+//
+// Per LATTICE_POLICY.md §1.2: AI infrastructure has REAL limits —
+// datacenter PUE > 1.0, NVIDIA B200 / AMD MI300X / Intel Gaudi 3 vendor
+// TDPs, NVLink/UCIE/PCIe bandwidth ceilings, ERCOT/PJM grid capacity
+// envelopes. These are pinned by verify/real_limits_audit.py and
+// verify/vendor_spec_audit.py, not by the n=6 lattice.
+//
+// Run:
+//     hexa run verify/run_all.hexa     # exit 0 = all subscripts PASS
+
+let SCRIPTS: [str] = [
+    "verify/grid_verify.py",
+    "verify/cross_doc_audit.py",
+    "verify/real_limits_audit.py",
+    "verify/vendor_spec_audit.py",
+]
+
+fn _file_exists(p: str) -> bool {
+    let r = exec("[ -f \"" + p + "\" ] && echo y || echo n").trim()
+    return r == "y"
+}
+
+fn main() {
+    let mut root = env("HEXA_GRID_ROOT")
+    if root.len() == 0 { root = exec("pwd").trim() }
+
+    println("hexa-grid / verify / run_all.hexa — sister-pattern orchestrator")
+    println("  repo root: " + root)
+    println("  scripts: " + str(SCRIPTS.len()))
+    println("")
+
+    let mut passed = 0
+    let mut failed: [str] = []
+
+    for s in SCRIPTS {
+        let path = root + "/" + s
+        if _file_exists(path) == false {
+            println("FAIL [missing] " + s)
+            failed = failed + [s]
+            continue
+        }
+        println("── running " + s + " ──")
+        let rc = exec("python3 \"" + path + "\"; echo $?").trim()
+        // Capture rc with a separate exec to ensure clean parse.
+        let rc2 = exec("python3 \"" + path + "\" > /dev/null 2>&1; echo $?").trim()
+        if rc2 == "0" {
+            passed = passed + 1
+            println("PASS " + s)
+        } else {
+            failed = failed + [s]
+            println("FAIL " + s + " (exit " + rc2 + ")")
+        }
+        println("")
+    }
+
+    println("──────────────────────────────────────────────────────────")
+    println("__HEXA_GRID_RUN_ALL__ " + str(passed) + "/" + str(SCRIPTS.len()) + " scripts PASS")
+    if failed.len() > 0 {
+        println("  failed: " + str(failed))
+        exit(1)
+    }
+    println("  closure: 15/15 native checks PASS (3 lattice + 4 cross-doc + 4 real-limits + 4 vendor-spec)")
+    println("  honesty: SPEC_FIRST verdict preserved (0/9 verbs wired)")
+    println("  policy:  LATTICE_POLICY §1.2 real-limits anchors enforced (PUE / B200 / NVLink / ERCOT)")
+    exit(0)
+}

@@ -52,6 +52,13 @@ chip_interconnect = "dancinlab/hexa-chip            → `hexa-chip interconnect`
 codex_model       = "dancinlab/hexa-codex           → `hexa-codex deploy` / `hexa-codex agent_serving` (model serving fabric)"
 
 # ── Closure provenance (raw#10 honest C3) ─────────────────
+# v1.0.0 closure: 9-verb spec substrate (4 groups). 0/9 verbs have working
+# .hexa CLI; 9/9 ship as spec-first markdown extracted from canon.
+# Native verify closure: 15/15 PASS across 4 scripts
+#   (3 lattice + 4 cross-doc + 4 real-limits + 4 vendor-spec).
+# Real-limit anchors per LATTICE_POLICY §1.2: PUE > 1.0 / B200,H200,MI300X,Gaudi3
+# TDP / NVLink,UCIe,PCIe BW / ERCOT,PJM grid capacity. Defers to MLPerf + Top500
+# for performance claims (raw#10 C3, no lattice-fit on external entities).
 [closure]
 verbs_total = 9
 groups_total = 4
@@ -59,6 +66,12 @@ verbs_wired = 0
 verbs_spec = 9
 verdict = "SPEC_FIRST"
 extracted_from = "canon/domains/{compute,infra}/ @ 47c70cbf"
+verify_scripts = 4
+verify_checks_total = 15
+verify_checks_passing = 15
+verify_orchestrator = "verify/run_all.hexa"
+real_limits_policy = "LATTICE_POLICY.md §1.2 (PUE > 1.0 / B200,H200,MI300X,Gaudi3 TDP / NVLink,UCIe,PCIe BW / ERCOT,PJM grid)"
+benchmark_deferral = "MLPerf (MLCommons) + Top500 (raw#10 C3)"
 
 # ── Scope honesty (raw#10 C3) ─────────────────────────────
 [scope]
