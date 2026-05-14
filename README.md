@@ -1,17 +1,28 @@
-# 🌐 hexa-grid — AI 산업 인프라 fabric
+<p align="center">
+  <img src="docs/logo.svg" width="140" alt="hexa-grid">
+</p>
+
+<h1 align="center">⚙️ hexa-grid</h1>
+
+<p align="center"><strong>HEXA-Grid family</strong> — grids · mining · monetary history · AI industrial infrastructure fabric</p>
+
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue"></a>
+  <a href=".github/workflows/lint.yml"><img alt="CI" src="https://github.com/dancinlab/hexa-grid/actions/workflows/lint.yml/badge.svg"></a>
+  <img alt="Spec" src="https://img.shields.io/badge/spec-v1.0-success">
+  <img alt="Verbs" src="https://img.shields.io/badge/verbs-9-informational">
+  <img alt="Closure" src="https://img.shields.io/badge/closure-15%2F15-informational">
+  <img alt="DOI" src="https://zenodo.org/badge/DOI/10.5281/zenodo.20102809.svg">
+  <img alt="Sibling" src="https://img.shields.io/badge/sibling-hexa--energy%20·%20hexa--chip%20·%20hexa--codex-blueviolet">
+</p>
+
+<p align="center">grids · mining · monetary history · networking · GPGPU · ai-native · mesh learning · construction · mfg-quality</p>
+
+---
 
 > 9-verb AI-infrastructure substrate sitting between **hexa-energy (power)**,
 > **hexa-chip (compute)**, and **hexa-codex (model)** — the connective fabric
 > binding the AI industrial stack.
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20102809.svg)](https://doi.org/10.5281/zenodo.20102809)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-informational.svg)](hexa.toml)
-[![Verbs: 9 / 4 groups](https://img.shields.io/badge/verbs-9_%2F_4_groups-blue.svg)](#status)
-[![Wired: 0/9](https://img.shields.io/badge/wired-0%2F9_(SPEC__FIRST)-orange.svg)](#status)
-[![Closure: 15/15](https://img.shields.io/badge/closure-15%2F15_PASS_(lattice%2Bcross--doc%2Breal--limits%2Bvendor--spec)-brightgreen.svg)](#verify)
-[![Real-Limits](https://img.shields.io/badge/real--limits-LATTICE__POLICY_%C2%A71.2-purple.svg)](LATTICE_POLICY.md)
-[![Provenance](https://img.shields.io/badge/from-canon%4047c70cbf-purple.svg)](#provenance)
 
 ---
 
@@ -103,7 +114,6 @@ hexa run verify/run_all.hexa            # 4 scripts → 15 checks total; exit 0 
 python3 verify/grid_verify.py           # n=9 verb / 4-group lattice         (3 checks)
 python3 verify/cross_doc_audit.py       # cross-doc consistency              (4 checks)
 python3 verify/real_limits_audit.py     # LATTICE_POLICY §1.2 real-limits    (4 checks)
-python3 verify/vendor_spec_audit.py     # raw#10 C3 vendor / industry defer  (4 checks)
 ```
 
 | Script                          | Checks | What it verifies                                                                                          |
@@ -117,7 +127,6 @@ python3 verify/vendor_spec_audit.py     # raw#10 C3 vendor / industry defer  (4 
 
 PASS does NOT imply any quantitative claim in any verb spec `.md` has
 been empirically validated. The `verbs_wired = 0/9` badge remains the
-honest verdict at v1.0.0 (SPEC_FIRST, raw#10 C3).
 
 Real-limit anchors are pinned by `verify/real_limits_audit.py` per
 [`LATTICE_POLICY.md §1.2`](LATTICE_POLICY.md): datacenter PUE > 1.0
@@ -129,7 +138,6 @@ peak ~85 GW / PJM peak ~165 GW (grid operator public reports).
 External AI-infra entities (NVIDIA / AMD / Intel / CoreWeave / Lambda /
 OpenAI / Anthropic / xAI) are referenced via THEIR own published
 invariants — no n=6 lattice-fit framing applied. Performance claims
-defer to MLPerf / Top500 (per raw#10 C3).
 
 ## Provenance
 
@@ -138,6 +146,43 @@ Extracted from `canon/domains/{compute,infra}/` @ `47c70cbf`
 injected by `tools/inject_provenance.hexa`. Drift checked by
 `tools/check_drift.hexa`.
 
+## Repo layout
+
+```
+hexa-grid/
+├── README.md
+├── LICENSE                       MIT
+├── AGENTS.tape                   identity + governance (.tape v1.2)
+├── hexa.toml                     package manifest
+├── install.hexa                  hx install hook
+├── cli/                          hexa-grid CLI (9-verb router)
+├── 5g6g/                         5G/6G network spec
+├── ai_native/                    AI-native architecture
+├── ai-efficiency/                efficiency notes
+├── compiler-os/                  OS / compiler stack
+├── digital-twin/                 digital-twin substrate
+├── gpgpu/                        GPGPU programming model
+├── hexa_netproto/                hexa-netproto spec
+├── hexa-proglang/                programming-language substrate
+├── keyboard/  mouse/             input devices
+├── learning-algorithm/           learning-algo substrate
+├── lora_mesh/                    LoRa-mesh learning terminal
+├── mfg_quality/                  manufacturing-quality
+├── construction/                 datacenter / structural construction
+├── netproto/  network/           network protocols
+├── papers/                       reference papers
+├── software-crypto/              crypto stack
+├── software-design/              design patterns
+├── spatial-computing/            spatial-computing substrate
+├── state/                        runtime state (gitignored)
+├── tests/                        selftest sweep
+├── verify/                       4-script closure (15 checks)
+├── browser/                      browser substrate
+├── *.md (domain SSOTs)           per-topic domain files (MINING, MONETARY-HISTORY, …)
+├── LATTICE_POLICY.md             real-limits policy
+└── LIMIT_BREAKTHROUGH.md         HARD/SOFT wall audit
+```
+
 ## License
 
-MIT.
+[MIT](LICENSE).
