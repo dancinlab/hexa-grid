@@ -46,7 +46,7 @@
 @I id001 := "hexa-grid" :: identity-claim [d=2026-05-14 active]
   kind = "HEXA-Grid family — grids · mining · monetary history"
   brief = "HEXA-Grid family · grids · mining · monetary history"
-  parent = "dancinlab/echoes"
+  parent = "dancinlab"
 
 @L l1 := "repo-layout" :: structure [active]
   AGENTS.tape -> "this file · governance + identity (.tape v1.2)"
